@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pos_recommendation_tree" model="ir.ui.view">
+        <field name="name">pos.product.recommendation.tree</field>
+        <field name="model">pos.product.recommendation</field>
+        <field name="arch" type="xml">
+            <tree string="Product Recommendation">
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="price"/>
+                <field name="recommendation_date"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="view_pos_recommendation_form" model="ir.ui.view">
+        <field name="name">pos.product.recommendation.form</field>
+        <field name="model">pos.product.recommendation</field>
+        <field name="arch" type="xml">
+            <form string="Product Recommendation">
+                <header>
+                    <button name="action_get_recommendations"
+                            string="Get Recommendations"
+                            type="object"
+                            class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="product_id"/>
+                            <field name="category_id"/>
+                            <field name="price"/>
+                        </group>
+                        <group>
+                            <field name="recommendation_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Recommended Products">
+                            <field name="recommended_product_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_pos_recommendation_search">
+        <field name="name">pos.product.recommendation.search</field>
+        <field name="model">pos.product.recommendation</field>
+        <field name="arch" type="xml">
+            <search string="Search Porduct Recommendation">
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="product_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_pos_recommendation">
+        <field name="name">Product Recommendations</field>
+        <field name="res_model">pos.product.recommendation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your firs product recommendation!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_pos_recommendation"
+              name="Product Recommendation"
+              action="action_pos_recommendation"
+              parent="point_of_sale.menu_point_root"
+              sequence="100"/>
+
+    <record id="view_pos_product_relationship_tree" model="ir.ui.view">
+        <field name="name">pos.product.relationship.tree</field>
+        <field name="model">pos.product.relationship</field>
+        <field name="arch" type="xml">
+            <tree string="Product Relationships">
+                <field name="product_id"/>
+                <field name="related_product_id"/>
+                <field name="frequency"/>
+                <field name="last_bought"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_pos_product_relationship_form" model="ir.ui.view">
+        <field name="name">pos.product.relationship.form</field>
+        <field name="model">pos.product.relationship</field>
+        <field name="arch" type="xml">
+            <form string="Product Relationship">
+
+                <sheet>
+                    <group>
+                        <field name="product_id"/>
+                        <field name="related_product_id"/>
+                        <field name="frequency"/>
+                        <field name="last_bought"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_pos_order_form_inherit" model="ir.ui.view">
+        <field name="name">pos.order.form.inherit</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button name="action_pos_order_paid"
+                        string="Process Relationships"
+                        type="object"
+                        groups="point_of_sale.group_pos_manager"
+                        class="oe_highlight"/>
+            </header>
+        </field>
+    </record>
+    <record id="ir_cron_update_product_popularity" model="ir.cron">
+        <field name="name">Update Product Popularity Scores</field>
+        <field name="model_id" ref="model_product_product"/>
+        <field name="state">code</field>
+        <field name="code">model._compute_popularity_score()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="product_template_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='general_information']" position="inside">
+                <group string="Popularity Metrics">
+                    <field name="view_count"/>
+                    <field name="sales_count_30"/>
+                    <field name="popularity_score" widget="percentage"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_pos_product_relationship">
+        <field name="name">Product Relationships</field>
+        <field name="res_model">pos.product.relationship</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem id="menu_pos_product_relationship"
+              name="Product Relationships"
+              action="action_pos_product_relationship"
+              parent="point_of_sale.menu_point_root"
+              sequence="101"/>
+</odoo>

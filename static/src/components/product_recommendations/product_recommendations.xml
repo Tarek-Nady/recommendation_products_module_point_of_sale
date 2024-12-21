@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_product_recommendations.ProductRecommendationPopup">
+        <div class="popup product-recommendation-popup">
+            <header class="modal-header bg-light">
+                <div class="d-flex align-items-center">
+                    <i class="fa fa-magic me-2 text-primary"></i>
+                    <h4 class="modal-title mb-0">
+                        <span class="recommendations-text">Recommendations for</span>
+                        <span class="product-title-highlight"><t t-esc="mainProduct.display_name"/></span>
+                    </h4>
+                </div>
+                <div class="btn close-button" t-on-click="cancel">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </div>
+            </header>
+
+            <main class="body modal-body overflow-auto px-4 py-3">
+                <!-- Similar Products -->
+                <section t-if="getSimilarProducts().length" class="recommendation-section mb-4">
+                    <div class="section-header d-flex align-items-center mb-3">
+                        <i class="fa fa-tags text-facebook me-2"></i>
+                        <h5 class="section-title mb-0">Similar Products</h5>
+                    </div>
+                    <div class="products-grid">
+                        <t t-foreach="getSimilarProducts()" t-as="product" t-key="product.id">
+                            <div class="product-card" t-on-click="() => this.addRecommendedProduct(product)">
+                                <div class="card-badge bought-together">Similar</div>
+                                <div class="image-container">
+                                    <img t-if="product.image_url"
+                                         t-att-src="product.image_url"
+                                         class="product-image" alt="Product"/>
+                                </div>
+                                <div class="product-info">
+                                    <div class="product-name" t-esc="product.display_name"/>
+                                    <div class="product-price" t-esc="env.utils.formatCurrency(product.lst_price)"/>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </section>
+
+                <!-- Frequently Bought Together -->
+                <section t-if="getFrequentlyBoughtTogether().length" class="recommendation-section mb-4">
+                    <div class="section-header d-flex align-items-center mb-3">
+                        <i class="fa fa-shopping-cart text-facebook me-2"></i>
+                        <h5 class="section-title mb-0">Frequently Bought Together</h5>
+                    </div>
+                    <div class="products-grid">
+                        <t t-foreach="getFrequentlyBoughtTogether()" t-as="product" t-key="product.id">
+                            <div class="product-card" t-on-click="() => this.addRecommendedProduct(product)">
+                                <div class="card-badge bought-together">
+                                    <t t-esc="product.frequency"/> times
+                                </div>
+                                <div class="image-container">
+                                    <img t-if="product.image_url"
+                                         t-att-src="product.image_url"
+                                         class="product-image" alt="Product"/>
+                                </div>
+                                <div class="product-info">
+                                    <div class="product-name" t-esc="product.display_name"/>
+                                    <div class="product-price" t-esc="env.utils.formatCurrency(product.lst_price)"/>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </section>
+
+                <section t-if="getPopularProducts().length" class="recommendation-section mb-4">
+                    <div class="section-header d-flex align-items-center mb-3">
+                        <i class="fa fa-fire text-danger me-2"></i>
+                        <h5 class="section-title mb-0">Popular Products</h5>
+                    </div>
+                                    <div class="products-grid">
+                        <t t-foreach="getPopularProducts()" t-as="product" t-key="product.id">
+                            <div class="product-card" t-on-click="() => this.addRecommendedProduct(product)">
+                                <!-- Popularity Badge -->
+                                <div class="card-badge popularity-badge">
+                                    <i class="fa fa-star me-1"></i>
+                                    <span t-esc="product.popularity_score"/>%
+                                </div>
+
+                                <div class="image-container">
+                                    <img t-if="product.image_url"
+                                         t-att-src="product.image_url"
+                                         class="product-image" alt="Product"/>
+                                </div>
+
+                                <div class="product-info">
+                                    <div class="product-name" t-esc="product.display_name"/>
+                                    <div class="product-price" t-esc="env.utils.formatCurrency(product.lst_price)"/>
+                                    <!-- Stats Row -->
+                                    <div class="product-stats">
+                                        <span class="stat-item">
+                                            <i class="fa fa-shopping-cart me-1"></i>
+                                            <t t-esc="product.sales_count"/>
+                                        </span>
+                                        <span class="stat-item">
+                                            <i class="fa fa-eye me-1"></i>
+                                            <t t-esc="product.view_count"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </t>
+</templates>

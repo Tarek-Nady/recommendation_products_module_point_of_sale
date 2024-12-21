@@ -1,0 +1,160 @@
+// Define color variables at the top
+$primary-color: #04bb53; // Rich blue
+$primary-light: #3b82f6; // Lighter blue
+$secondary-color: #0f172a; // Dark slate
+$accent-color: #1c936f; // Sky blue
+$success-color: #059669; // Emerald green
+$text-dark: #1e293b; // Slate 800
+$text-light: #f8fafc; // Slate 50
+$border-color: #e2e8f0; // Slate 200
+$hover-shadow: rgba(15, 23, 42, 0.1);
+
+.product-recommendation-popup {
+  .modal-header {
+    border-bottom: 2px solid $border-color;
+    padding: 1rem 1.5rem;
+
+    .modal-title {
+      .recommendations-text {
+        color: $text-light;
+        font-weight: 500;
+        padding: 0.4rem 0.5rem;
+        background: $primary-color;
+        border-radius: 4px;
+        margin-right: 0.5rem;
+      }
+
+      .product-title-highlight {
+        background: $accent-color;
+        color: $text-light;
+        padding: 0.4rem 0.5rem;
+        border-radius: 4px;
+        font-weight: bold;
+      }
+    }
+
+    .close-button {
+      padding: 0.5rem;
+      border-radius: 20%;
+      transition: all 0.3s ease;
+      background: $primary-color;
+      color: $text-light;
+    }
+  }
+
+  .section-header {
+    border-bottom: 2px solid $border-color;
+    padding-bottom: 0.5rem;
+
+    .section-title {
+      background: $primary-color;
+      font-size: 1.1rem;
+      border-radius: 4px;
+      color: $text-light;
+      font-weight: 600;
+      padding: 0.4rem 0.5rem;
+      transition: background-color 0.3s ease;
+    }
+  }
+
+  .products-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+  }
+
+  .product-card {
+    position: relative;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid $border-color;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    flex: 0 0 calc(20% - 0.6rem);
+    min-width: 0;
+
+    .popularity-badge {
+      background: linear-gradient(135deg, #ff6b6b, #f53e3e);
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+
+      i {
+        color: #ffd700;
+      }
+    }
+
+    .product-stats {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 0.25rem;
+      font-size: 0.75rem;
+      color: #64748b;
+
+      .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+
+        i {
+          font-size: 0.7rem;
+        }
+      }
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      background: $secondary-color;
+      color: $text-light;
+
+      &.bought-together {
+        background: $success-color;
+      }
+    }
+
+    .image-container {
+      padding: 0.25rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f8fafc;
+
+      .product-image {
+        max-width: 100%;
+        max-height: 80%;
+        object-fit: cover;
+      }
+    }
+
+    .product-info {
+      padding: 0.5rem;
+      text-align: center;
+
+      .product-name {
+        font-size: 0.8rem;
+        color: $text-dark;
+        margin-bottom: 0.25rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .product-price {
+        font-weight: 600;
+        color: $success-color;
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
